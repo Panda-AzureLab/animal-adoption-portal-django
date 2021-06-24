@@ -59,4 +59,4 @@ jobs:
         with:
           app-name: 'taaportal'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_480d86fdd441400ebdce46fe1e542143 }}
+          publish-profile: ${{ secrets.DEV_APP_PUBLISH_PROFILE }}
