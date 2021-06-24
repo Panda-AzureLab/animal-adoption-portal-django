@@ -26,7 +26,8 @@ SECRET_KEY = 'o^e+o_@ol4+nb_n79rz1_@^wbv4n4=801u@@c*-g*lhofl))%e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['taaportal.azurewebsites.net']
+ALLOWED_HOSTS = [os.environ['WEBSITE_HOSTNAME']] if 'WEBSITE_HOSTNAME' in os.environ else []
 
 LOGOUT_REDIRECT_URL = 'Index'
 
