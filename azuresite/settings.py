@@ -75,6 +75,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'azuresite.wsgi.application'
 
 
+
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend'
 ]
