@@ -7,7 +7,16 @@ import pymongo
 
 from adoptionsite.models import CartItem, Animal
 
-conn_str = "mongodb://cosmos-panda-taa-sea-dev:MNoNom1AQMPUI4CUmUypOM3MYCd3VhDaWyNnMJLV6vxhFzJm3lcmAm85bZpZLeD73PTlBi8N7JuYcbcucb2iPQ==@cosmos-panda-taa-sea-dev.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@cosmos-panda-taa-sea-dev@"
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
+
+credential = DefaultAzureCredential()
+
+secret_client = SecretClient(vault_url="https://kvpandataaseastasiadev.vault.azure.net/", credential=credential)
+
+secret = secret_client.get_secret("MONGODB-ConnectionString")
+
+conn_str = secret.value
 
 client = pymongo.MongoClient(conn_str, serverSelectionTimeoutMS=5000)
 

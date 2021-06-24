@@ -13,6 +13,14 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import os
 
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
+
+credential = DefaultAzureCredential()
+
+secret_client = SecretClient(vault_url="https://kvpandataaseastasiadev.vault.azure.net/", credential=credential)
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -84,13 +92,15 @@ AUTHENTICATION_BACKENDS = [
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'taa_portal',
-        'USER' : 'pandaadmin@pg-panda-taa-sea-dev',
-        'PASSWORD' : 'P@$$W0rd!',
-        'HOST' : 'pg-panda-taa-sea-dev.postgres.database.azure.com',
+        'NAME': secret_client.get_secret("POSTGRESQLDB-DatabaseName").value,
+        'USER' : secret_client.get_secret("POSTGRESQLDB-Username").value + '@' + secret_client.get_secret("POSTGRESQLDB-HostName").value,
+        'PASSWORD' : secret_client.get_secret("POSTGRESQLDB-Password").value,
+        'HOST' :  secret_client.get_secret("POSTGRESQLDB-HostName").value + '.postgres.database.azure.com',
         'OPTIONS': { 'sslmode': 'require' }
     }
 }
