@@ -36,7 +36,7 @@ for animal in available_animals:
 cart_items = []
 
 for animal in available_animals:
-    cart_items.append(CartItem(id=1, quantity=0, name=animal.name))
+    cart_items.append(CartItem(id=animal.id, quantity=0, name=animal.name))
 
 
 def index(request):
